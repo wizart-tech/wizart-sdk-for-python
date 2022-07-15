@@ -30,8 +30,7 @@ client = vc(
 ```
 ## Usage
 See notebook with examples.
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/wizart-tech/wizart-sdk-for-python/-/blob/master/wizart-example.ipynb)
-
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/wizart-tech/wizart-sdk-for-python/blob/main/wizart-example.ipynb)
 The client allows you to perform requests similar to those described in the documentation.
 * [segmentation](https://vision-api.wizart.ai/#815786b5-c8a5-42fa-94d5-f7a546e7804b)
 * [detection](https://vision-api.wizart.ai/#c07fcc19-4b45-4803-b9cf-e1ab85100ed6)
