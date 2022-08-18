@@ -45,12 +45,13 @@ class ComputerVisionClient:
         response = self._request(resource, feature)
         return json.loads(response.content)
 
-    def interior(self, resource: str, feature: FeatureTypes = ''):
-        response = self._request(resource, feature)
+    def interior(self, resource: str, feature: FeatureTypes = '', vectorized=False):
+        response = self._request(resource, feature, {'vectorized': vectorized} if vectorized else {})
         response_data = json.loads(response.content)
-        mask_bytes = base64.b64decode(str(response_data['segmentation']['mask']))
-        im = Image.open(BytesIO(mask_bytes))
-        response_data['segmentation']['mask'] = np.array(im)
+        if not vectorized:
+            mask_bytes = base64.b64decode(str(response_data['segmentation']['mask']))
+            im = Image.open(BytesIO(mask_bytes))
+            response_data['segmentation']['mask'] = np.array(im)
 
         return response_data
 
@@ -71,7 +72,11 @@ class ComputerVisionClient:
 
     @staticmethod
     def _vectorized_mask_response(response):
-        return json.loads(response.content)['vectorized_mask']
+        data = json.loads(response.content)
+        if 'vectorized_masks' in data:
+            return data['vectorized_masks']
+        else:
+            return data['vectorized_mask']
 
     @staticmethod
     def create_payload(resource: str, feature: FeatureTypes):

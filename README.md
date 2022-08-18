@@ -143,3 +143,10 @@ feature = client.interior(
     feature=vc.feature.CEILING
 )
 ```
+To get masks in vector form
+```python
+mask = client.interior(
+    resource="file system path or http link to image",
+    vectorized=True
+)
+```
