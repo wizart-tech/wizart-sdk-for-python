@@ -7,7 +7,7 @@ CHANGELOG = (HERE / "CHANGELOG.md").read_text()
 
 setup(
     name="wizart-vision",
-    version="1.0.2",
+    version="1.0.6",
     description="Wizart Computer Vision SDK",
     long_description=README + '\n\n' + CHANGELOG,
     long_description_content_type="text/markdown",

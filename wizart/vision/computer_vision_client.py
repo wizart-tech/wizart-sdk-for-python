@@ -11,19 +11,22 @@ from PIL import Image
 
 from ._client_enums import FeatureTypes, AnalysisTypes
 
-DEFAULT_SERVER = "https://pim-client.wizart.ai"
+DEFAULT_SERVER = "https://vision-api.p.rapidapi.com"
+DEFAULT_HOST = "vision-api.p.rapidapi.com"
+
 
 class ComputerVisionClient:
     feature = FeatureTypes
     analysis_types = AnalysisTypes
 
-    def __init__(self, token, endpoint=DEFAULT_SERVER):
+    def __init__(self, token, endpoint=DEFAULT_SERVER, host=DEFAULT_HOST):
         if endpoint is None:
             raise ValueError("Parameter 'endpoint' must not be None.")
         if token is None:
             raise ValueError("Parameter 'token' must not be None.")
 
         self.endpoint = endpoint
+        self.host = host
         self.token = token
 
     def segmentation(self, resource: str, feature: FeatureTypes = '', vectorized=False):
@@ -58,9 +61,11 @@ class ComputerVisionClient:
     def _request(self, resource, feature, data={}):
         files = self.create_payload(resource, feature)
         feature_param = '/' + feature if feature else feature
-        request_url = self.endpoint + '/vision-api/v3/' + inspect.stack()[1][3] + feature_param
+        request_url = self.endpoint + '/' + inspect.stack()[1][3] + feature_param
         return requests.request("POST", request_url, headers={
-            'Authorization': self.token
+            "Accept": "application/json",
+            "X-RapidAPI-Key": self.token,
+            "X-RapidAPI-Host": self.host
         }, data=data, files=files)
 
     @staticmethod
